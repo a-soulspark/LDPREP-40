@@ -74,6 +74,7 @@ func spawn_slime():
 	slime.position = position
 	slime.player = self
 	slime.follow_delay *= len(slime_list)
+	slime.connect("area_entered", $LivingEntity, "_on_area_entered")
 	get_parent().add_child(slime)
 
 func throw_slime():
@@ -86,11 +87,3 @@ func throw_slime():
 
 func _on_slime_hit(slime):
 	throwable_slimes.append(slime)
-
-func _ready():
-	animations.play()
-
-func _on_animation_finished():
-	pass
-	#if animations.animation == walk_animation_name:
-#		animations.play(idle_animation_name)

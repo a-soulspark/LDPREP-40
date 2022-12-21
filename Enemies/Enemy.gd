@@ -27,7 +27,7 @@ func _process(delta):
 	
 	if random_attack == 0 and attack_timer == 0.0:
 		for bullet in range(0, attack0_number_bullets):
-			var vector = Vector2.RIGHT.rotated(bullet * (360 / attack0_number_bullets)).normalized()
+			var vector = Vector2.RIGHT.rotated(bullet * (2*PI / attack0_number_bullets)).normalized()
 			var new_bullet = spawn_bullet(position, vector)
 			new_bullet.rotation = bullet * (360 / attack0_number_bullets) + PI / 2
 	

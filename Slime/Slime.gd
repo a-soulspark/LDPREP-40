@@ -1,4 +1,4 @@
-extends KinematicBody2D
+extends Area2D
 
 signal hit
 
@@ -23,7 +23,6 @@ var throw_start : Vector2
 var throw_target : Vector2
 
 func _ready():
-	add_collision_exception_with(player)
 	target_position = player.position
 
 func _process(delta):
