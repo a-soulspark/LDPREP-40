@@ -10,3 +10,8 @@ script = ExtResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 3 )
+
+[node name="GetBigger" type="Tween" parent="."]
+pause_mode = 2
+
+[connection signal="tween_all_completed" from="GetBigger" to="." method="_on_GetBigger_tween_all_completed"]

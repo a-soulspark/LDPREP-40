@@ -5,7 +5,7 @@ export var attack_speed_secs = 2
 export var attack0_number_bullets = 100
 export var enemy_speed = 200.0
 
-onready var animated_sprite = $AnimatedSprite
+onready var animations = $AnimatedSprite
 onready var tween = $Tween
 func _ready():
 	pass
