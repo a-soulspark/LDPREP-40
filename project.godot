@@ -27,7 +27,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Ldprep- 40"
-run/main_scene="res://Enemies/Enemy.tscn"
+run/main_scene="res://Enemies/EnemyTest.tscn"
 config/icon="res://icon.png"
 
 [editor]
@@ -73,6 +73,7 @@ move_down={
 [physics]
 
 common/enable_pause_aware_picking=true
+2d/default_gravity=0
 
 [rendering]
 
