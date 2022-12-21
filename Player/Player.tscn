@@ -1,7 +1,8 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Player/Assets/mini_slime-Sheet.png" type="Texture" id=2]
+[ext_resource path="res://LivingEntity.tscn" type="PackedScene" id=3]
 
 [sub_resource type="AtlasTexture" id=15]
 atlas = ExtResource( 2 )
@@ -70,5 +71,8 @@ animation = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 12 )
+
+[node name="LivingEntity" parent="." instance=ExtResource( 3 )]
+is_hostile = false
 
 [connection signal="animation_finished" from="Animations" to="." method="_on_animation_finished"]

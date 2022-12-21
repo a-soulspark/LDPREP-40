@@ -1,7 +1,7 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Enemies/Enemy.gd" type="Script" id=1]
-[ext_resource path="res://LivingEntity.gd" type="Script" id=2]
+[ext_resource path="res://LivingEntity.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Enemies/avocente.png" type="Texture" id=3]
 [ext_resource path="res://Enemies/EnemyBullet.tscn" type="PackedScene" id=4]
 
@@ -16,9 +16,6 @@ animations = [ {
 [sub_resource type="CircleShape2D" id=2]
 radius = 20.0
 
-[sub_resource type="CircleShape2D" id=3]
-radius = 16.0
-
 [node name="Enemy" type="KinematicBody2D"]
 script = ExtResource( 1 )
 enemy_bullet_scene = ExtResource( 4 )
@@ -32,12 +29,6 @@ playing = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 2 )
 
-[node name="LivingEntity" type="Area2D" parent="."]
-script = ExtResource( 2 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LivingEntity"]
-shape = SubResource( 3 )
+[node name="LivingEntity" parent="." instance=ExtResource( 2 )]
 
 [node name="Tween" type="Tween" parent="."]
-
-[connection signal="area_entered" from="LivingEntity" to="LivingEntity" method="_on_area_entered"]

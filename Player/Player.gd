@@ -34,7 +34,6 @@ func _physics_process(delta):
 		var progress = float(animations.frame) / animations.frames.get_frame_count(animations.animation)
 		animations.position.y = -abs(sin(progress * PI)) * 16
 	
-	print(animations.animation)
 	if velocity.length() == 0:
 		if animations.animation == walk_animation_name and animations.frame == 0:
 			animations.play(idle_animation_name)

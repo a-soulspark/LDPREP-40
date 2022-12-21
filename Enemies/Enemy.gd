@@ -28,7 +28,8 @@ func _process(delta):
 	if random_attack == 0 and attack_timer == 0.0:
 		for bullet in range(0, attack0_number_bullets):
 			var vector = Vector2.RIGHT.rotated(bullet * (360 / attack0_number_bullets)).normalized()
-			spawn_bullet(position, vector)
+			var new_bullet = spawn_bullet(position, vector)
+			new_bullet.rotation = bullet * (360 / attack0_number_bullets) + PI / 2
 	
 	attack_timer += delta
 	
@@ -41,6 +42,7 @@ func spawn_bullet(position, vector):
 	bullet.position = position
 	bullet.vector = vector
 	get_parent().add_child(bullet)
+	return bullet
 
 func get_random_int(low, high) -> int:
 	var random = RandomNumberGenerator.new()

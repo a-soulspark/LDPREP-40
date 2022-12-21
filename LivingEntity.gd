@@ -4,6 +4,9 @@ extends Area2D
 export var health : int = 10
 export var is_hostile : bool = true
 
+func _ready():
+	connect("area_entered", self, "_on_area_entered")
+
 func _on_area_entered(area):
 	if not area is Attack: return
 	
@@ -18,4 +21,4 @@ func hurt(damage : int):
 		die()
 
 func die():
-	queue_free()
+	get_parent().queue_free()
