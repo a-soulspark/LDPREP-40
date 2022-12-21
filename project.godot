@@ -8,10 +8,36 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Area2D",
+"class": "Attack",
+"language": "GDScript",
+"path": "res://Attack.gd"
+}, {
+"base": "Area2D",
+"class": "LivingEntity",
+"language": "GDScript",
+"path": "res://LivingEntity.gd"
+} ]
+_global_script_class_icons={
+"Attack": "",
+"LivingEntity": ""
+}
+
 [application]
 
 config/name="Ldprep- 40"
+run/main_scene="res://Enemies/Enemy.tscn"
 config/icon="res://icon.png"
+
+[editor]
+
+version_control_autoload_on_startup=true
+version_control_plugin_name="GitAPI"
+
+[gdnative]
+
+singletons=[  ]
 
 [gui]
 
