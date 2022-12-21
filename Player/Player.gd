@@ -2,8 +2,12 @@ extends KinematicBody2D
 
 export var SPEED: int = 10000
 export var walk_animation_name = "walk"
+export var walk_forward_animation_name = "walk_forward"
+export var walk_up_animation_name = "walk_up"
 export var idle_animation_name = "idle"
 onready var animations: AnimatedSprite = $Animations
+
+var jumping = false
 
 func _input(event):
 	pass
@@ -30,22 +34,33 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("throw"):
 		throw_slime()
 	
-	if animations.animation == walk_animation_name:
+	if jumping:
 		var progress = float(animations.frame) / animations.frames.get_frame_count(animations.animation)
-		animations.position.y = -abs(sin(progress * PI)) * 16
+		animations.position.y = -abs(sin(progress * PI)) * 2
 	
 	if velocity.length() == 0:
-		if animations.animation == walk_animation_name and animations.frame == 0:
-			animations.play(idle_animation_name)
+		if jumping and animations.frame == 0:
+			jumping = false
+			animations.speed_scale = 0.75
 	else:
-		if animations.animation == idle_animation_name:
+		if not jumping:
+			jumping = true
 			animations.frame = 0
-			animations.play(walk_animation_name)
+			animations.speed_scale = 1
+			play_walk_animation(velocity)
+		else:
+			var frame = animations.frame
+			play_walk_animation(velocity)
+			animations.frame = frame
 	
 	velocity = velocity.normalized() * SPEED * delta
 	
 	move_and_slide(velocity)
 
+func play_walk_animation(input):
+	if input.y == 0: animations.play(walk_animation_name)
+	elif input.y > 0: animations.play(walk_forward_animation_name)
+	else: animations.play(walk_up_animation_name)
 
 export var slime_scene: PackedScene = null
 var slime_list = []

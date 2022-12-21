@@ -1,8 +1,10 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Player/Assets/mini_slime-Sheet.png" type="Texture" id=2]
 [ext_resource path="res://LivingEntity.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Player/Assets/mini_slime_forward.png" type="Texture" id=4]
+[ext_resource path="res://Player/Assets/mini_slime_up.png" type="Texture" id=5]
 
 [sub_resource type="AtlasTexture" id=15]
 atlas = ExtResource( 2 )
@@ -44,6 +46,46 @@ region = Rect2( 88, 0, 22, 22 )
 atlas = ExtResource( 2 )
 region = Rect2( 66, 0, 22, 22 )
 
+[sub_resource type="AtlasTexture" id=24]
+atlas = ExtResource( 4 )
+region = Rect2( 54, 0, 27, 20 )
+
+[sub_resource type="AtlasTexture" id=25]
+atlas = ExtResource( 4 )
+region = Rect2( 27, 0, 27, 20 )
+
+[sub_resource type="AtlasTexture" id=26]
+atlas = ExtResource( 4 )
+region = Rect2( 0, 0, 27, 20 )
+
+[sub_resource type="AtlasTexture" id=27]
+atlas = ExtResource( 4 )
+region = Rect2( 108, 0, 27, 20 )
+
+[sub_resource type="AtlasTexture" id=28]
+atlas = ExtResource( 4 )
+region = Rect2( 81, 0, 27, 20 )
+
+[sub_resource type="AtlasTexture" id=29]
+atlas = ExtResource( 5 )
+region = Rect2( 0, 0, 24, 18 )
+
+[sub_resource type="AtlasTexture" id=30]
+atlas = ExtResource( 5 )
+region = Rect2( 24, 0, 24, 18 )
+
+[sub_resource type="AtlasTexture" id=31]
+atlas = ExtResource( 5 )
+region = Rect2( 48, 0, 24, 18 )
+
+[sub_resource type="AtlasTexture" id=32]
+atlas = ExtResource( 5 )
+region = Rect2( 72, 0, 24, 18 )
+
+[sub_resource type="AtlasTexture" id=33]
+atlas = ExtResource( 5 )
+region = Rect2( 96, 0, 24, 18 )
+
 [sub_resource type="SpriteFrames" id=18]
 animations = [ {
 "frames": [ SubResource( 15 ), SubResource( 14 ), SubResource( 13 ), SubResource( 13 ), SubResource( 17 ), SubResource( 16 ) ],
@@ -55,24 +97,34 @@ animations = [ {
 "loop": true,
 "name": "walk",
 "speed": 16.0
+}, {
+"frames": [ SubResource( 24 ), SubResource( 25 ), SubResource( 26 ), SubResource( 26 ), SubResource( 27 ), SubResource( 28 ) ],
+"loop": true,
+"name": "walk_forward",
+"speed": 16.0
+}, {
+"frames": [ SubResource( 29 ), SubResource( 30 ), SubResource( 31 ), SubResource( 32 ), SubResource( 33 ) ],
+"loop": true,
+"name": "walk_up",
+"speed": 16.0
 } ]
 
 [sub_resource type="CircleShape2D" id=12]
-radius = 30.0167
+radius = 24.0
 
 [node name="Player" type="KinematicBody2D"]
 script = ExtResource( 1 )
 
 [node name="Animations" type="AnimatedSprite" parent="."]
-position = Vector2( -8, -8 )
 scale = Vector2( 4, 4 )
 frames = SubResource( 18 )
-animation = "idle"
+animation = "walk_up"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 12 )
 
 [node name="LivingEntity" parent="." instance=ExtResource( 3 )]
+health = 5
 is_hostile = false
 
 [connection signal="animation_finished" from="Animations" to="." method="_on_animation_finished"]
