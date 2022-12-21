@@ -11,6 +11,7 @@ position = Vector2( 88, 112 )
 script = ExtResource( 2 )
 player_path = NodePath("../Player")
 follow_delay = 0.15
+throw_duration = 0.75
 
 [node name="Sprite" type="Sprite" parent="."]
 modulate = Color( 0, 1, 0.760784, 1 )
@@ -19,3 +20,5 @@ texture = ExtResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
+
+[node name="Tween" type="Tween" parent="."]
