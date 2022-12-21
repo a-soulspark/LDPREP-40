@@ -64,26 +64,27 @@ func play_walk_animation(input):
 
 export var slime_scene: PackedScene = null
 var slime_list = []
-var throwable_slimes = []
 
 func spawn_slime():
 	var slime = slime_scene.instance()
-	slime_list.append(slime)
-	throwable_slimes.append(slime)
-
 	slime.position = position
 	slime.player = self
-	slime.follow_delay *= len(slime_list)
+	slime.follow_index = len(slime_list)
 	slime.connect("area_entered", $LivingEntity, "_on_area_entered")
+	
+	slime_list.append(slime)
 	get_parent().add_child(slime)
 
 func throw_slime():
-	if len(throwable_slimes) == 0: return
+	if len(slime_list) == 0: return
+	var slime_to_throw = slime_list.pop_front()
 	
-	var slime_to_throw = throwable_slimes.pop_back()
+	for i in range(len(slime_list)):
+		slime_list[i].follow_index = i
 	
 	slime_to_throw.throw(get_global_mouse_position())
-	slime_to_throw.connect("hit", self, "_on_slime_hit", [slime_to_throw], CONNECT_ONESHOT)
+	slime_to_throw.connect("slime_returned", self, "_on_slime_hit", [slime_to_throw], CONNECT_ONESHOT)
 
 func _on_slime_hit(slime):
-	throwable_slimes.append(slime)
+	slime.follow_index = len(slime_list)
+	slime_list.append(slime)

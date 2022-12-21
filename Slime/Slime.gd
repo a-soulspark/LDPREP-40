@@ -1,6 +1,6 @@
 extends Area2D
 
-signal hit
+signal slime_returned
 
 class PositionSnapshot:
 	var time : float
@@ -16,6 +16,7 @@ export var throw_duration : float = 1
 
 onready var player : KinematicBody2D = get_node(player_path)
 
+var follow_index : int
 var positions : Array = []
 var target_position
 var throw_timer = 0
@@ -30,7 +31,7 @@ func _process(delta):
 	positions.append(PositionSnapshot.new(current_time, player.position))
 	
 	for p in positions:
-		if current_time > p.time + int(follow_delay * 1000):
+		if current_time > p.time + int(follow_delay * (1 + follow_index) * 1000):
 			positions.erase(p)
 			target_position = p.position
 		else:
@@ -40,10 +41,12 @@ func _process(delta):
 		throw_timer -= delta
 		if throw_timer / throw_duration < 0.5:
 			throw_start = target_position
+			monitoring = false
 		
 		position = lerp(throw_start, throw_target, ease(sin((1 - throw_timer / throw_duration) * PI), 0.75))
 		if throw_timer <= 0:
-			emit_signal("hit")
+			monitoring = true
+			emit_signal("slime_returned")
 	else:
 		position = lerp(position, target_position, 0.075)
 		look_at(target_position)

@@ -13,4 +13,7 @@ func _physics_process(delta):
 	
 	if timer > time_until_deletion:
 		self.queue_free()
-	
+
+
+func _on_slime_hit_timer_timeout():
+	$Attack.collision_mask |= 2

@@ -32,8 +32,6 @@ func _process(delta):
 			new_bullet.rotation = bullet * (360 / attack0_number_bullets) + PI / 2
 	
 	attack_timer += delta
-	
-	
 
 export var enemy_bullet_scene: PackedScene = null
  
