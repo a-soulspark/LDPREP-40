@@ -26,7 +26,7 @@ var throw_target : Vector2
 func _ready():
 	target_position = player.position
 
-func _process(delta):
+func _physics_process(delta):
 	#modulate = Color.white * float($Attack.monitorable)
 
 	var current_time = Time.get_ticks_msec()
@@ -52,7 +52,7 @@ func _process(delta):
 			emit_signal("slime_returned")
 	else:
 		position = lerp(position, target_position, 0.075)
-		look_at(target_position)
+		$Animations.flip_h = position.x > target_position.x
 
 func throw(target):
 	throw_timer = throw_duration

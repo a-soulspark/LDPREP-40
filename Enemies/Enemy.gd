@@ -7,12 +7,6 @@ export var enemy_speed = 200.0
 
 onready var animations = $AnimatedSprite
 onready var tween = $Tween
-func _ready():
-	pass
-
-func _input(event):
-	if event is InputEventMouseButton:
-		pass
 
 var attack_timer = attack_speed_secs
 var bullets_timer = 0.0
@@ -27,20 +21,20 @@ func _process(delta):
 	
 	if random_attack == 0 and attack_timer == 0.0:
 		for bullet in range(0, attack0_number_bullets):
-			var vector = Vector2.RIGHT.rotated(bullet * (2*PI / attack0_number_bullets)).normalized()
-			var new_bullet = spawn_bullet(position, vector)
-			new_bullet.rotation = bullet * (360 / attack0_number_bullets) + PI / 2
+			spawn_bullet(position, bullet * (2*PI / attack0_number_bullets))
 	
 	attack_timer += delta
 
-export var enemy_bullet_scene: PackedScene = null
- 
-func spawn_bullet(position, vector):
+export var enemy_bullet_scene: PackedScene
+
+func spawn_bullet(position : Vector2, direction : float):
+	var vector = Vector2.RIGHT.rotated(direction).normalized()
+	
 	var bullet: EnemyBullet = enemy_bullet_scene.instance()
 	bullet.position = position
 	bullet.vector = vector
+	bullet.rotation = rotation
 	get_parent().add_child(bullet)
-	return bullet
 
 func get_random_int(low, high) -> int:
 	var random = RandomNumberGenerator.new()

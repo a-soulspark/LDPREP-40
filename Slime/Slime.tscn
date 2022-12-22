@@ -1,30 +1,31 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://Enemies/Attack.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Slime/Slime.gd" type="Script" id=2]
 [ext_resource path="res://Player/Assets/mini_slime_up.png" type="Texture" id=3]
 [ext_resource path="res://Player/Assets/mini_slime_forward.png" type="Texture" id=4]
 [ext_resource path="res://Player/Assets/mini_slime-Sheet.png" type="Texture" id=5]
+[ext_resource path="res://Slime/Assets/mini_slime-Sheet.png" type="Texture" id=6]
 
-[sub_resource type="AtlasTexture" id=15]
-atlas = ExtResource( 5 )
-region = Rect2( 44, 0, 22, 22 )
+[sub_resource type="AtlasTexture" id=35]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 0, 15, 15 )
 
-[sub_resource type="AtlasTexture" id=14]
-atlas = ExtResource( 5 )
-region = Rect2( 22, 0, 22, 22 )
+[sub_resource type="AtlasTexture" id=36]
+atlas = ExtResource( 6 )
+region = Rect2( 15, 0, 15, 15 )
 
-[sub_resource type="AtlasTexture" id=13]
-atlas = ExtResource( 5 )
-region = Rect2( 0, 0, 22, 22 )
+[sub_resource type="AtlasTexture" id=37]
+atlas = ExtResource( 6 )
+region = Rect2( 30, 0, 15, 15 )
 
-[sub_resource type="AtlasTexture" id=17]
-atlas = ExtResource( 5 )
-region = Rect2( 88, 0, 22, 22 )
+[sub_resource type="AtlasTexture" id=38]
+atlas = ExtResource( 6 )
+region = Rect2( 45, 0, 15, 15 )
 
-[sub_resource type="AtlasTexture" id=16]
-atlas = ExtResource( 5 )
-region = Rect2( 66, 0, 22, 22 )
+[sub_resource type="AtlasTexture" id=39]
+atlas = ExtResource( 6 )
+region = Rect2( 60, 0, 15, 15 )
 
 [sub_resource type="AtlasTexture" id=21]
 atlas = ExtResource( 5 )
@@ -33,6 +34,10 @@ region = Rect2( 44, 0, 22, 22 )
 [sub_resource type="AtlasTexture" id=20]
 atlas = ExtResource( 5 )
 region = Rect2( 22, 0, 22, 22 )
+
+[sub_resource type="AtlasTexture" id=13]
+atlas = ExtResource( 5 )
+region = Rect2( 0, 0, 22, 22 )
 
 [sub_resource type="AtlasTexture" id=19]
 atlas = ExtResource( 5 )
@@ -88,7 +93,7 @@ region = Rect2( 72, 0, 24, 18 )
 
 [sub_resource type="SpriteFrames" id=34]
 animations = [ {
-"frames": [ SubResource( 15 ), SubResource( 14 ), SubResource( 13 ), SubResource( 13 ), SubResource( 17 ), SubResource( 16 ) ],
+"frames": [ SubResource( 35 ), SubResource( 36 ), SubResource( 37 ), SubResource( 38 ), SubResource( 39 ) ],
 "loop": true,
 "name": "idle",
 "speed": 12.0
@@ -120,10 +125,10 @@ follow_delay = 0.15
 throw_duration = 0.75
 
 [node name="Animations" type="AnimatedSprite" parent="."]
-scale = Vector2( 2, 2 )
+scale = Vector2( 4, 4 )
 frames = SubResource( 34 )
-animation = "walk"
-frame = 1
+animation = "idle"
+frame = 3
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

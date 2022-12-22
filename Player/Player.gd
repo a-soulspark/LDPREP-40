@@ -9,9 +9,6 @@ onready var animations: AnimatedSprite = $Animations
 
 var jumping = false
 
-func _input(event):
-	pass
-
 func _physics_process(delta):
 	var velocity = Vector2.ZERO
 	if Input.is_action_pressed("move_right"):
@@ -74,13 +71,14 @@ func spawn_slime():
 	
 	slime_list.append(slime)
 	get_parent().add_child(slime)
+	get_parent().move_child(slime, get_position_in_parent())
 
-var a = false
+var is_throwing = false
 
 func throw_slime():
 	if len(slime_list) == 0: return
-	if a: return
-	a = true
+	if is_throwing: return
+	is_throwing = true
 	var slime_to_throw = slime_list.pop_front()
 	
 	for i in range(len(slime_list)):
@@ -92,4 +90,4 @@ func throw_slime():
 func _on_slime_hit(slime):
 	slime.follow_index = len(slime_list)
 	slime_list.append(slime)
-	a = false
+	is_throwing = false
