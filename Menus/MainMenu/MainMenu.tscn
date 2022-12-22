@@ -1,13 +1,72 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Menus/MainMenu/MainMenu.gd" type="Script" id=1]
+[ext_resource path="res://Menus/MainMenu/Font.tres" type="DynamicFont" id=2]
+[ext_resource path="res://Menus/main_theme.tres" type="Theme" id=3]
 
-[sub_resource type="DynamicFontData" id=1]
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 1, 0.709804, 0.709804, 1 )
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.709804, 0.443137, 0.443137, 1 )
+
+[sub_resource type="Theme" id=6]
+default_font = ExtResource( 2 )
+Button/styles/hover = SubResource( 1 )
+Button/styles/normal = SubResource( 2 )
+Label/fonts/font = ExtResource( 2 )
+
+[sub_resource type="DynamicFontData" id=7]
 font_path = "res://Fonts/Roboto-Regular.ttf"
 
-[sub_resource type="DynamicFont" id=2]
-size = 50
-font_data = SubResource( 1 )
+[sub_resource type="DynamicFont" id=8]
+size = 61
+font_data = SubResource( 7 )
+
+[sub_resource type="Animation" id=3]
+resource_name = "FloatingTitle"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Name:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 0.176777, 12.5533 ),
+"update": 0,
+"values": [ Vector2( -487, -229 ), Vector2( -487, -200 ) ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "FloatingTitleBackwards"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Name:rect_position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( -487, -200 ), Vector2( -487, -229 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Name:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -487, -229 ) ]
+}
 
 [node name="MainMenu" type="Node2D"]
 script = ExtResource( 1 )
@@ -19,9 +78,10 @@ current = true
 [node name="Name" type="Label" parent="."]
 margin_left = -487.0
 margin_top = -229.0
-margin_right = -268.0
-margin_bottom = -169.0
-custom_fonts/font = SubResource( 2 )
+margin_right = -221.0
+margin_bottom = -157.0
+theme = SubResource( 6 )
+custom_fonts/font = SubResource( 8 )
 text = "LDPrep40"
 
 [node name="Control" type="Control" parent="."]
@@ -34,28 +94,40 @@ margin_right = 6.0
 margin_bottom = 189.0
 
 [node name="MainContainer" type="VBoxContainer" parent="Control"]
-margin_left = -514.0
-margin_top = -28.0
-margin_right = -295.0
-margin_bottom = 63.0
+margin_left = -497.0
+margin_top = -99.0
+margin_right = -278.0
+margin_bottom = 41.0
 
 [node name="Start" type="Button" parent="Control/MainContainer"]
 margin_right = 219.0
-margin_bottom = 20.0
+margin_bottom = 38.0
+theme = ExtResource( 3 )
+custom_fonts/font = ExtResource( 2 )
 text = "Start"
 
-[node name="Options" type="Button" parent="Control/MainContainer"]
-margin_top = 24.0
+[node name="Settings" type="Button" parent="Control/MainContainer"]
+margin_top = 42.0
 margin_right = 219.0
-margin_bottom = 44.0
-text = "Options"
+margin_bottom = 80.0
+theme = ExtResource( 3 )
+custom_fonts/font = ExtResource( 2 )
+text = "Settings"
 
 [node name="Exit" type="Button" parent="Control/MainContainer"]
-margin_top = 48.0
+margin_top = 84.0
 margin_right = 219.0
-margin_bottom = 68.0
+margin_bottom = 122.0
+theme = ExtResource( 3 )
+custom_fonts/font = ExtResource( 2 )
 text = "Exit"
 
+[node name="TitleAnimation" type="AnimationPlayer" parent="."]
+anims/FloatingTitle = SubResource( 3 )
+anims/FloatingTitleBackwards = SubResource( 5 )
+anims/RESET = SubResource( 4 )
+
 [connection signal="pressed" from="Control/MainContainer/Start" to="." method="_on_Start_pressed"]
-[connection signal="pressed" from="Control/MainContainer/Options" to="." method="_on_Options_pressed"]
+[connection signal="pressed" from="Control/MainContainer/Settings" to="." method="_on_Options_pressed"]
 [connection signal="pressed" from="Control/MainContainer/Exit" to="." method="_on_Exit_pressed"]
+[connection signal="animation_finished" from="TitleAnimation" to="." method="_on_TitleAnimation_animation_finished"]

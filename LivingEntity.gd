@@ -57,5 +57,6 @@ func die():
 
 
 func _on_GetBigger_tween_all_completed():
+	Transition.change_scene("res://Menus/MainMenu/MainMenu.tscn")
 	get_parent().queue_free()
 
