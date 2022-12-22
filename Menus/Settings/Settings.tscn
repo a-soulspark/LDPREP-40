@@ -1,0 +1,49 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Menus/Settings/Settings.gd" type="Script" id=1]
+
+[sub_resource type="DynamicFontData" id=1]
+font_path = "res://Fonts/Roboto-Regular.ttf"
+
+[sub_resource type="DynamicFont" id=2]
+size = 17
+font_data = SubResource( 1 )
+
+[node name="Settings" type="Control"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 2.0
+margin_top = 3.0
+margin_right = 2.0
+margin_bottom = 3.0
+mouse_filter = 2
+script = ExtResource( 1 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_right = 166.0
+margin_bottom = 107.0
+alignment = 1
+
+[node name="Window" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 40.0
+margin_right = 175.0
+margin_bottom = 67.0
+
+[node name="label" type="Label" parent="VBoxContainer/Window"]
+margin_top = 3.0
+margin_right = 61.0
+margin_bottom = 24.0
+custom_fonts/font = SubResource( 2 )
+text = "Window"
+
+[node name="CheckBox" type="OptionButton" parent="VBoxContainer/Window"]
+margin_left = 65.0
+margin_right = 175.0
+margin_bottom = 27.0
+custom_fonts/font = SubResource( 2 )
+text = "WIndowed"
+flat = true
+align = 2
+items = [ "WIndowed", null, false, 0, null, "Borderless Windowed", null, false, 1, null, "Fullscreen", null, false, 2, null ]
+selected = 0
