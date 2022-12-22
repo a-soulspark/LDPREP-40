@@ -542,7 +542,7 @@ SPEED = 16000
 slime_scene = ExtResource( 4 )
 
 [node name="Animations" parent="Player" index="0"]
-frame = 3
+frame = 0
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 current = true
