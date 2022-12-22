@@ -1,7 +1,7 @@
 extends Button
 
 export var animation_weight = 0.5
-export var out_of_sight_position_y = -1000
+export var out_of_sight_position_y = -2000
 
 var _node_positions = []
 func _ready():
