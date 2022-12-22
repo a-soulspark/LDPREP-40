@@ -23,11 +23,17 @@ _global_script_classes=[ {
 "class": "LivingEntity",
 "language": "GDScript",
 "path": "res://LivingEntity.gd"
+}, {
+"base": "Node2D",
+"class": "SpeechBubble",
+"language": "GDScript",
+"path": "res://Enemies/SpeechBubble.gd"
 } ]
 _global_script_class_icons={
 "Attack": "",
 "EnemyBullet": "",
-"LivingEntity": ""
+"LivingEntity": "",
+"SpeechBubble": ""
 }
 
 [application]
@@ -35,6 +41,11 @@ _global_script_class_icons={
 config/name="Ldprep- 40"
 run/main_scene="res://Enemies/EnemyTest.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+Transition="*res://Menus/Transition.tscn"
+Settings="*res://Menus/Settings/Settings.tscn"
 
 [display]
 
