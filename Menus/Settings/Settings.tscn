@@ -27,7 +27,7 @@ alignment = 1
 
 [node name="Window" type="HBoxContainer" parent="VBoxContainer"]
 margin_top = 40.0
-margin_right = 175.0
+margin_right = 174.0
 margin_bottom = 67.0
 
 [node name="label" type="Label" parent="VBoxContainer/Window"]
@@ -39,11 +39,13 @@ text = "Window"
 
 [node name="CheckBox" type="OptionButton" parent="VBoxContainer/Window"]
 margin_left = 65.0
-margin_right = 175.0
+margin_right = 174.0
 margin_bottom = 27.0
 custom_fonts/font = SubResource( 2 )
-text = "WIndowed"
+text = "Windowed"
 flat = true
 align = 2
-items = [ "WIndowed", null, false, 0, null, "Borderless Windowed", null, false, 1, null, "Fullscreen", null, false, 2, null ]
+items = [ "Windowed", null, false, 0, null, "Borderless Windowed", null, false, 1, null, "Fullscreen", null, false, 2, null ]
 selected = 0
+
+[connection signal="item_selected" from="VBoxContainer/Window/CheckBox" to="." method="_on_CheckBox_item_selected"]
