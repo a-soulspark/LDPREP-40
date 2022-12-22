@@ -9,6 +9,7 @@ export var is_hostile : bool = true
 export var death_size_multiplier = 3
 
 onready var tween = $GetBigger
+onready var maximum_health = health
 
 var invincibility_timer = 0
 

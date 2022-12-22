@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://tilemap.png" type="Texture" id=2]
 [ext_resource path="res://Enemies/Enemy.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Slime/Slime.tscn" type="PackedScene" id=4]
 [ext_resource path="res://tileset_main.png" type="Texture" id=5]
+[ext_resource path="res://Player/health.png" type="Texture" id=6]
 
 [sub_resource type="TileSet" id=1]
 0/name = "tilemap.png 0"
@@ -47,6 +48,51 @@
 0/shapes = [  ]
 0/z_index = 0
 
+[sub_resource type="GDScript" id=6]
+script/source = "extends TextureRect
+
+export var entity_path : NodePath
+onready var entity : LivingEntity = get_node(entity_path)
+
+var maximum_health
+var heart_width = 16
+
+func _ready():
+	entity.connect(\"entity_hurt\", self, \"_on_entity_hurt\")
+	maximum_health = entity.maximum_health
+	$BG.rect_size.x = heart_width * entity.maximum_health
+	rect_size.x = heart_width * entity.maximum_health
+
+func _on_entity_hurt():
+	rect_size.x = heart_width * entity.health
+"
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.733333, 0, 0.32549, 1 )
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="GDScript" id=5]
+script/source = "extends ProgressBar
+
+export var entity_path : NodePath
+onready var entity : LivingEntity = get_node(entity_path)
+
+func _ready():
+	entity.connect(\"entity_hurt\", self, \"_on_entity_hurt\")
+	max_value = entity.maximum_health
+	value = entity.health
+
+func _on_entity_hurt():
+	value = entity.health
+"
+
 [node name="EnemyTest" type="Node2D"]
 
 [node name="TileMap" type="TileMap" parent="."]
@@ -69,6 +115,9 @@ position = Vector2( 192, 112 )
 SPEED = 16000
 slime_scene = ExtResource( 4 )
 
+[node name="Animations" parent="Player" index="0"]
+frame = 1
+
 [node name="Camera2D" type="Camera2D" parent="Player"]
 current = true
 zoom = Vector2( 1.5, 1.5 )
@@ -83,12 +132,50 @@ attack0_number_bullets = 16
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
-anchor_right = 1.0
-margin_bottom = 64.0
+[node name="HealthBar" type="TextureRect" parent="CanvasLayer"]
+margin_left = 64.0
+margin_top = 64.0
+margin_right = 80.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 0, 16 )
+rect_scale = Vector2( 2, 2 )
+texture = ExtResource( 6 )
+expand = true
+stretch_mode = 2
+script = SubResource( 6 )
+entity_path = NodePath("../../Player/LivingEntity")
 
-[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/VBoxContainer"]
-margin_right = 1024.0
-margin_bottom = 64.0
-rect_min_size = Vector2( 0, 64 )
+[node name="BG" type="TextureRect" parent="CanvasLayer/HealthBar"]
+modulate = Color( 0.388235, 0.388235, 0.388235, 1 )
+show_behind_parent = true
+margin_right = 16.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 0, 16 )
+texture = ExtResource( 6 )
+expand = true
+stretch_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 64.0
+margin_top = -96.0
+margin_right = -64.0
+margin_bottom = -64.0
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="BossBar" type="ProgressBar" parent="CanvasLayer/VBoxContainer"]
+margin_right = 896.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 0, 32 )
+custom_styles/fg = SubResource( 4 )
+custom_styles/bg = SubResource( 3 )
 percent_visible = false
+script = SubResource( 5 )
+entity_path = NodePath("../../../Enemy/LivingEntity")
+
+[editable path="Player"]
+[editable path="Enemy"]

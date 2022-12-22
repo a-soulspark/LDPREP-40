@@ -31,7 +31,7 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("ui_cancel"):
 		spawn_slime()
 	
-	if Input.is_action_pressed("throw"):
+	if Input.is_action_just_pressed("throw"):
 		throw_slime()
 	
 	if jumping:
