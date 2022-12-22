@@ -18,6 +18,9 @@ func _on_Settings_pressed():
 			child.rect_position.y = out_of_sight_position_y
 	else:
 		_should_play_cool_animation = true
+	
+	
+	
 
 var _current_node = 0
 func cool_animation():
@@ -49,3 +52,4 @@ func _on_CheckBox_item_selected(index):
 	if index == 2:
 		OS.window_borderless = false
 		OS.window_fullscreen = true
+

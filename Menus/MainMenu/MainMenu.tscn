@@ -7,6 +7,8 @@
 [ext_resource path="res://Fonts/PixelOperator.ttf" type="DynamicFontData" id=5]
 [ext_resource path="res://Menus/MainMenu/Buttons/menu_arrows.png" type="Texture" id=6]
 [ext_resource path="res://Menus/MainMenu/Buttons/menu_arrows_base.png" type="Texture" id=7]
+[ext_resource path="res://SoundEffects/menu2.wav" type="AudioStream" id=6]
+[ext_resource path="res://SoundEffects/menu.wav" type="AudioStream" id=7]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 1, 0.709804, 0.709804, 1 )
@@ -65,6 +67,49 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ Vector2( -487, -200 ), Vector2( -487, -229 ) ]
+}
+
+[sub_resource type="Animation" id=9]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Control/MainContainer/Start:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Control/MainContainer/Settings:rect_position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 36 ) ]
+}
+
+[sub_resource type="Animation" id=8]
+resource_name = "StartHoverAnimations"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Control/MainContainer/Start:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 0.34151, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 20, 0 ) ]
 }
 
 [node name="MainMenu" type="Node2D"]
@@ -168,8 +213,24 @@ text = "Exit"
 anims/FloatingTitle = SubResource( 3 )
 anims/FloatingTitleBackwards = SubResource( 5 )
 
-[connection signal="pressed" from="CanvasLayer/ColorRect/MainContainer/Start" to="." method="_on_Start_pressed"]
-[connection signal="pressed" from="CanvasLayer/ColorRect/MainContainer/Settings" to="CanvasLayer/ColorRect/MainContainer/Settings" method="_on_Settings_pressed"]
-[connection signal="item_selected" from="CanvasLayer/ColorRect/MainContainer/Settings/label/CheckBox" to="CanvasLayer/ColorRect/MainContainer/Settings" method="_on_CheckBox_item_selected"]
-[connection signal="pressed" from="CanvasLayer/ColorRect/MainContainer/Exit" to="." method="_on_Exit_pressed"]
+[node name="HoverSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+
+[node name="ButtonAnimations" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 9 )
+anims/StartHoverAnimations = SubResource( 8 )
+
+[node name="ClickSound" type="AudioStreamPlayer" parent="."]
+pause_mode = 2
+stream = ExtResource( 7 )
+
+[connection signal="mouse_entered" from="Control/MainContainer/Start" to="." method="_on_Start_mouse_entered"]
+[connection signal="mouse_exited" from="Control/MainContainer/Start" to="." method="_on_Start_mouse_exited"]
+[connection signal="pressed" from="Control/MainContainer/Start" to="." method="_on_Start_pressed"]
+[connection signal="mouse_entered" from="Control/MainContainer/Settings" to="." method="_on_Settings_mouse_entered"]
+[connection signal="pressed" from="Control/MainContainer/Settings" to="." method="_on_Settings_pressed"]
+[connection signal="pressed" from="Control/MainContainer/Settings" to="Control/MainContainer/Settings" method="_on_Settings_pressed"]
+[connection signal="item_selected" from="Control/MainContainer/Settings/label/CheckBox" to="Control/MainContainer/Settings" method="_on_CheckBox_item_selected"]
+[connection signal="mouse_entered" from="Control/MainContainer/Exit" to="." method="_on_Exit_mouse_entered"]
+[connection signal="pressed" from="Control/MainContainer/Exit" to="." method="_on_Exit_pressed"]
 [connection signal="animation_finished" from="TitleAnimation" to="." method="_on_TitleAnimation_animation_finished"]
