@@ -39,7 +39,6 @@ config/icon="res://icon.png"
 [autoload]
 
 Transition="*res://Menus/Transition.tscn"
-Settings="*res://Menus/Settings/Settings.tscn"
 
 [display]
 
