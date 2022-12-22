@@ -1,9 +1,10 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Menus/MainMenu/MainMenu.gd" type="Script" id=1]
 [ext_resource path="res://Menus/MainMenu/Font.tres" type="DynamicFont" id=2]
 [ext_resource path="res://Menus/main_theme.tres" type="Theme" id=3]
 [ext_resource path="res://Menus/MainMenu/Settings.gd" type="Script" id=4]
+[ext_resource path="res://Fonts/PixelOperator.ttf" type="DynamicFontData" id=5]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 1, 0.709804, 0.709804, 1 )
@@ -17,19 +18,9 @@ Button/styles/hover = SubResource( 1 )
 Button/styles/normal = SubResource( 2 )
 Label/fonts/font = ExtResource( 2 )
 
-[sub_resource type="DynamicFontData" id=7]
-font_path = "res://Fonts/Roboto-Regular.ttf"
-
-[sub_resource type="DynamicFont" id=8]
-size = 61
-font_data = SubResource( 7 )
-
-[sub_resource type="DynamicFontData" id=9]
-font_path = "res://Fonts/Roboto-Regular.ttf"
-
-[sub_resource type="DynamicFont" id=10]
-size = 17
-font_data = SubResource( 9 )
+[sub_resource type="DynamicFont" id=7]
+size = 73
+font_data = ExtResource( 5 )
 
 [sub_resource type="Animation" id=3]
 resource_name = "FloatingTitle"
@@ -69,18 +60,18 @@ current = true
 
 [node name="ColorRect" type="ColorRect" parent="."]
 margin_left = -524.0
-margin_top = -265.0
+margin_top = -349.0
 margin_right = -203.0
-margin_bottom = 262.0
+margin_bottom = 394.0
 color = Color( 0.529412, 0.211765, 0.211765, 1 )
 
 [node name="Name" type="Label" parent="."]
 margin_left = -487.0
 margin_top = -229.0
 margin_right = -221.0
-margin_bottom = -157.0
+margin_bottom = -155.0
 theme = SubResource( 6 )
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 7 )
 text = "LDPrep40"
 
 [node name="Control" type="Control" parent="."]
@@ -100,15 +91,15 @@ margin_bottom = 41.0
 
 [node name="Start" type="Button" parent="Control/MainContainer"]
 margin_right = 219.0
-margin_bottom = 38.0
+margin_bottom = 32.0
 theme = ExtResource( 3 )
 custom_fonts/font = ExtResource( 2 )
 text = "Start"
 
 [node name="Settings" type="Button" parent="Control/MainContainer"]
-margin_top = 42.0
+margin_top = 36.0
 margin_right = 219.0
-margin_bottom = 80.0
+margin_bottom = 68.0
 theme = ExtResource( 3 )
 custom_fonts/font = ExtResource( 2 )
 text = "Settings"
@@ -116,9 +107,9 @@ script = ExtResource( 4 )
 
 [node name="ColorRect" type="ColorRect" parent="Control/MainContainer/Settings"]
 margin_left = 287.0
-margin_top = -415.0
+margin_top = -498.0
 margin_right = 1023.0
-margin_bottom = 151.0
+margin_bottom = 276.0
 color = Color( 0, 0, 0, 0.843137 )
 
 [node name="label" type="Label" parent="Control/MainContainer/Settings"]
@@ -127,24 +118,31 @@ margin_top = -38.0
 margin_right = 363.0
 margin_bottom = -17.0
 theme = ExtResource( 3 )
-custom_fonts/font = SubResource( 10 )
 text = "Window"
+__meta__ = {
+"_edit_use_anchors_": true
+}
 
 [node name="CheckBox" type="OptionButton" parent="Control/MainContainer/Settings/label"]
+anchor_left = 0.5
+anchor_right = 1.20455
+anchor_bottom = 0.53125
 margin_left = 65.0
 margin_right = 159.0
 margin_bottom = 21.0
 theme = ExtResource( 3 )
-custom_fonts/font = SubResource( 10 )
 text = "Windowed"
-align = 2
+align = 1
 items = [ "Windowed", null, false, 0, null, "Borderless Windowed", null, false, 1, null, "Fullscreen", null, false, 2, null ]
 selected = 0
+__meta__ = {
+"_edit_use_anchors_": true
+}
 
 [node name="Exit" type="Button" parent="Control/MainContainer"]
-margin_top = 84.0
+margin_top = 72.0
 margin_right = 219.0
-margin_bottom = 122.0
+margin_bottom = 104.0
 theme = ExtResource( 3 )
 custom_fonts/font = ExtResource( 2 )
 text = "Exit"
