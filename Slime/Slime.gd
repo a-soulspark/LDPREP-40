@@ -40,17 +40,24 @@ func _physics_process(delta):
 			break
 	
 	if throw_timer > 0:
+		# Throw animation
 		throw_timer -= delta
+		rotation = (global_position - target_position).angle()
+		rotate(PI / 2)
+		
 		if throw_timer / throw_duration < 0.5:
 			throw_start = target_position
-			monitoring = false
+			$Animations.play("throw", true)
 		
 		position = lerp(throw_start, throw_target, ease(sin((1 - throw_timer / throw_duration) * PI), 0.75))
 		if throw_timer <= 0:
-			monitoring = true
+			$VulnerableTimer.start(	)
 			$Attack.monitorable = false
+			rotation = 0
+			$Animations.play("idle")
 			emit_signal("slime_returned")
 	else:
+		# Follow Player
 		position = lerp(position, target_position, 0.075)
 		$Animations.flip_h = position.x > target_position.x
 
@@ -58,4 +65,9 @@ func throw(target):
 	throw_timer = throw_duration
 	throw_start = position
 	throw_target = target
+	look_at(throw_target)
+	rotate(PI / 2)
 	$Attack.monitorable = true
+	monitoring = false
+	$Animations.play("throw")
+	$VulnerableTimer.stop()
