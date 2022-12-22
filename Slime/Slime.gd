@@ -27,6 +27,8 @@ func _ready():
 	target_position = player.position
 
 func _process(delta):
+	#modulate = Color.white * float($Attack.monitorable)
+
 	var current_time = Time.get_ticks_msec()
 	positions.append(PositionSnapshot.new(current_time, player.position))
 	
@@ -46,6 +48,7 @@ func _process(delta):
 		position = lerp(throw_start, throw_target, ease(sin((1 - throw_timer / throw_duration) * PI), 0.75))
 		if throw_timer <= 0:
 			monitoring = true
+			$Attack.monitorable = false
 			emit_signal("slime_returned")
 	else:
 		position = lerp(position, target_position, 0.075)
@@ -55,3 +58,4 @@ func throw(target):
 	throw_timer = throw_duration
 	throw_start = position
 	throw_target = target
+	$Attack.monitorable = true

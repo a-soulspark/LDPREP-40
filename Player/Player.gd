@@ -31,7 +31,7 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("ui_cancel"):
 		spawn_slime()
 	
-	if Input.is_action_just_pressed("throw"):
+	if Input.is_action_pressed("throw"):
 		throw_slime()
 	
 	if jumping:
@@ -75,8 +75,12 @@ func spawn_slime():
 	slime_list.append(slime)
 	get_parent().add_child(slime)
 
+var a = false
+
 func throw_slime():
 	if len(slime_list) == 0: return
+	if a: return
+	a = true
 	var slime_to_throw = slime_list.pop_front()
 	
 	for i in range(len(slime_list)):
@@ -88,3 +92,4 @@ func throw_slime():
 func _on_slime_hit(slime):
 	slime.follow_index = len(slime_list)
 	slime_list.append(slime)
+	a = false

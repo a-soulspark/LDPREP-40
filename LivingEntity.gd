@@ -1,11 +1,14 @@
 class_name LivingEntity
 extends Area2D
 
+signal entity_hurt
+
 export var health : int = 10
 export var invincibility_duration : float = 1
 export var is_hostile : bool = true
-onready var tween = $GetBigger
 export var death_size_multiplier = 3
+
+onready var tween = $GetBigger
 
 var invincibility_timer = 0
 
@@ -27,6 +30,7 @@ func _on_area_entered(area):
 func hurt(damage : int):
 	health -= damage
 	invincibility_timer = invincibility_duration
+	emit_signal("entity_hurt")
 	
 	if health <= 0:
 		die()

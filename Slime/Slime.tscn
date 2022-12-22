@@ -1,5 +1,6 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=28 format=2]
 
+[ext_resource path="res://Enemies/Attack.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Slime/Slime.gd" type="Script" id=2]
 [ext_resource path="res://Player/Assets/mini_slime_up.png" type="Texture" id=3]
 [ext_resource path="res://Player/Assets/mini_slime_forward.png" type="Texture" id=4]
@@ -122,8 +123,12 @@ throw_duration = 0.75
 scale = Vector2( 2, 2 )
 frames = SubResource( 34 )
 animation = "walk"
-frame = 4
+frame = 1
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
+
+[node name="Attack" parent="." instance=ExtResource( 1 )]
+monitorable = false
+destroy_on_hit = false

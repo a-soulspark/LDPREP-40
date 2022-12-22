@@ -12,8 +12,7 @@ func _ready():
 
 func _input(event):
 	if event is InputEventMouseButton:
-		print(event.position)
-		move_to(event.position, 1)
+		pass
 
 var attack_timer = attack_speed_secs
 var bullets_timer = 0.0
@@ -24,6 +23,7 @@ func _process(delta):
 		random_attack = get_random_int(0,0)
 		bullets_timer = 0.0
 		attack_timer = 0.0
+		move_to(Vector2(randf() * 1536, randf() * 768), 1)
 	
 	if random_attack == 0 and attack_timer == 0.0:
 		for bullet in range(0, attack0_number_bullets):
