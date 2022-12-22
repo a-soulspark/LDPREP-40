@@ -478,7 +478,7 @@ func _ready():
 	entity.connect(\"entity_hurt\", self, \"_on_entity_hurt\")
 	
 	maximum_health = entity.maximum_health
-	for i in range(maximum_health):
+	for _i in range(maximum_health):
 		var new_heart = heart_scene.instance()
 		hearts.append(new_heart)
 		add_child(new_heart)
