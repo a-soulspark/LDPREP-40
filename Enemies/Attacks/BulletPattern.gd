@@ -36,7 +36,7 @@ func _ready():
 	reset_timer(false)
 
 func _process(delta):
-	if is_aimed:
+	if is_aimed and is_instance_valid(target):
 		look_at(target.global_position)
 	
 	# if is in a burst or is in clock and the clock is enabled
