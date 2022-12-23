@@ -509,6 +509,9 @@ tile_data = PoolIntArray( -1, 2, 0, -65536, 2, 1, -65535, 2, 1, -65534, 2, 1, -6
 position = Vector2( 960, 576 )
 attack0_number_bullets = 16
 
+[node name="AnimatedSprite" parent="Enemy" index="0"]
+scale = Vector2( 4, 4 )
+
 [node name="Pattern1" type="Node2D" parent="Enemy"]
 script = ExtResource( 8 )
 bullet = ExtResource( 12 )
@@ -553,7 +556,7 @@ SPEED = 16000
 slime_scene = ExtResource( 4 )
 
 [node name="Animations" parent="Player" index="0"]
-frame = 5
+frame = 3
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 current = true
@@ -567,14 +570,6 @@ editor_draw_limits = true
 script = ExtResource( 7 )
 
 [node name="Tween" type="Tween" parent="Player/Camera2D"]
-
-[node name="CanvasLayer2" type="CanvasLayer" parent="Player/Camera2D"]
-layer = 2
-
-[node name="PauseMenu" type="Node2D" parent="Player/Camera2D/CanvasLayer2"]
-pause_mode = 2
-script = ExtResource( 2 )
-main_menu_scene = ExtResource( 14 )
 
 [node name="ColorRect" type="Sprite" parent="Player"]
 visible = false
@@ -636,10 +631,17 @@ margin_right = 96.0
 margin_bottom = 16.0
 text = "The Avocado Man"
 
+[node name="PauseMenu" type="Node2D" parent="."]
+pause_mode = 2
+script = ExtResource( 2 )
+main_menu_scene = ExtResource( 14 )
+
 [connection signal="entity_hurt" from="Enemy/LivingEntity" to="Player/Camera2D" method="shake" binds= [ 5.0 ]]
 [connection signal="entity_death" from="Player/LivingEntity" to="CanvasLayer" method="hide"]
 [connection signal="entity_free" from="Player/LivingEntity" to="Player/Camera2D" method="_on_entity_free"]
 [connection signal="entity_hurt" from="Player/LivingEntity" to="Player/Camera2D" method="shake" binds= [ 30.0 ]]
+[connection signal="paused" from="PauseMenu" to="CanvasLayer" method="hide"]
+[connection signal="unpaused" from="PauseMenu" to="CanvasLayer" method="show"]
 
 [editable path="Enemy"]
 [editable path="Player"]

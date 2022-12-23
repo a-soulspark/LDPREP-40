@@ -1,6 +1,6 @@
 extends CanvasLayer
 
-onready var animation = $ColorRect/AnimationPlayer
+onready var animation = $Transition/AnimationPlayer
 
 func change_scene(to_scene: String):
 	get_tree().paused = true
