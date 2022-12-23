@@ -77,11 +77,14 @@ func _on_body_entered(body):
 	call_deferred("stick_to_body", body)
 
 func stick_to_body(body):
+	if is_stuck: return
+	
 	var transf = global_transform
 	get_parent().remove_child(self)
 	body.add_child(self)
 	global_transform = transf
 	scale /= 2
+	z_index = 2
 	
 	is_stuck = true
 	is_thrown = false
@@ -100,6 +103,7 @@ func pull():
 	original_parent.add_child(self)
 	global_transform = transf
 	scale *= 2
+	z_index = 0
 	
 	rotation = 0
 	is_stuck = false
