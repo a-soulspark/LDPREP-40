@@ -4,10 +4,16 @@ onready var title_animation = $TitleAnimation
 onready var hover_sound = $HoverSound
 onready var click_sound = $ClickSound
 onready var option_animation = $ColorRect/CoolOptionsAnimation
+onready var sound_option = $ColorRect/label2/SoundSlider
+onready var sound_label = $ColorRect/label2/value
+
+export var default_sound = 80
 
 func _ready():
 	title_animation.play("FloatingTitle")
 	option_animation.play("RESET")
+	sound_option.value = default_sound
+	sound_label.text =  str(default_sound)
 
 func _on_Start_pressed():
 	click_sound.play()
@@ -57,3 +63,7 @@ func _on_Settings_pressed():
 		option_animation.play("cool_animation")
 		_options = true
 
+
+func _on_SoundSlider_value_changed(value):
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), value - 100)
+	sound_label.text = str(int(value))
