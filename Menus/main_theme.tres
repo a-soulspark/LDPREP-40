@@ -1,12 +1,11 @@
 [gd_resource type="Theme" load_steps=8 format=2]
 
 [ext_resource path="res://Fonts/Font.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Menus/buttons.png" type="Texture" id=2]
 
-[sub_resource type="StyleBoxFlat" id=1]
-bg_color = Color( 1, 0.709804, 0.709804, 1 )
-
-[sub_resource type="StyleBoxFlat" id=2]
-bg_color = Color( 0.709804, 0.443137, 0.443137, 1 )
+[sub_resource type="StyleBoxTexture" id=7]
+texture = ExtResource( 2 )
+region_rect = Rect2( 0, 0, 137, 36 )
 
 [sub_resource type="StyleBoxFlat" id=3]
 bg_color = Color( 0, 1, 0.858824, 1 )
@@ -23,8 +22,7 @@ bg_color = Color( 0, 0.811765, 1, 1 )
 [resource]
 default_font = ExtResource( 1 )
 Button/fonts/font = ExtResource( 1 )
-Button/styles/hover = SubResource( 1 )
-Button/styles/normal = SubResource( 2 )
+Button/styles/normal = SubResource( 7 )
 Label/fonts/font = ExtResource( 1 )
 OptionButton/colors/font_color = Color( 0, 0, 0, 1 )
 OptionButton/colors/font_color_hover = Color( 0.129412, 0.129412, 0.129412, 1 )
