@@ -143,13 +143,14 @@ collision_layer = 2
 collision_mask = 2
 script = ExtResource( 2 )
 player_path = NodePath("../Player")
-follow_delay = 0.15
+follow_delay = 0.125
 throw_duration = 0.75
 
 [node name="Animations" type="AnimatedSprite" parent="."]
 scale = Vector2( 4, 4 )
 frames = SubResource( 34 )
 animation = "idle"
+frame = 1
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

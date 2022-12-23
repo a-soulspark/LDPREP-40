@@ -179,6 +179,8 @@ anims/StartHoverAnimations = SubResource( 8 )
 pause_mode = 2
 stream = ExtResource( 7 )
 
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
 [connection signal="mouse_entered" from="Control/MainContainer/Start" to="." method="_on_Start_mouse_entered"]
 [connection signal="mouse_exited" from="Control/MainContainer/Start" to="." method="_on_Start_mouse_exited"]
 [connection signal="pressed" from="Control/MainContainer/Start" to="." method="_on_Start_pressed"]

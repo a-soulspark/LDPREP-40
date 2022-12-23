@@ -15,7 +15,7 @@ _data = [ Vector2( 0, 1 ), 0.0, -0.289549, 0, 0, Vector2( 1, 0 ), -3.37217, 0.0,
 scale = Vector2( 4, 4 )
 texture = ExtResource( 1 )
 script = ExtResource( 2 )
-bullet_speed = 200.0
+bullet_speed = 150.0
 time_until_deletion = 20
 
 [node name="Attack" parent="." instance=ExtResource( 3 )]
@@ -40,6 +40,8 @@ show_behind_parent = true
 lifetime = 0.5
 local_coords = false
 texture = ExtResource( 4 )
+emission_shape = 1
+emission_sphere_radius = 2.0
 flag_align_y = true
 spread = 180.0
 gravity = Vector2( 0, 0 )

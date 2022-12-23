@@ -58,7 +58,7 @@ func _physics_process(delta):
 			emit_signal("slime_returned")
 	else:
 		# Follow Player
-		position = lerp(position, target_position, 0.075)
+		position = lerp(position, target_position, 0.3)
 		$Animations.flip_h = position.x > target_position.x
 
 func throw(target):

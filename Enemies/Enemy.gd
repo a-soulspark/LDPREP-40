@@ -9,19 +9,18 @@ onready var animations = $AnimatedSprite
 onready var tween = $Tween
 
 var attack_timer = attack_speed_secs
-var bullets_timer = 0.0
 var random_attack = null
 
 func _process(delta):
 	if attack_timer >= attack_speed_secs:
 		random_attack = get_random_int(0,0)
-		bullets_timer = 0.0
 		attack_timer = 0.0
-		move_to(Vector2(randf() * 1536, randf() * 768), 1)
+		move_to(Vector2(rand_range(256, 1024), rand_range(256, 1024)), 1)
 	
 	if random_attack == 0 and attack_timer == 0.0:
-		for bullet in range(0, attack0_number_bullets):
-			spawn_bullet(position, bullet * (2*PI / attack0_number_bullets))
+		$Pattern1.fire_burst()
+#		for bullet in range(0, attack0_number_bullets):
+#			spawn_bullet(position, bullet * (2*PI / attack0_number_bullets))
 	
 	attack_timer += delta
 
