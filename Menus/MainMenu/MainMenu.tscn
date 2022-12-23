@@ -322,7 +322,12 @@ stream = ExtResource( 6 )
 pause_mode = 2
 stream = ExtResource( 7 )
 
+<<<<<<< HEAD
 [connection signal="item_selected" from="ColorRect/label/CheckBox" to="Control/MainContainer/Settings" method="_on_CheckBox_item_selected"]
+=======
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+>>>>>>> f84b06a4c0a467faa0054eacbda8a47142fa5463
 [connection signal="mouse_entered" from="Control/MainContainer/Start" to="." method="_on_Start_mouse_entered"]
 [connection signal="mouse_exited" from="Control/MainContainer/Start" to="." method="_on_Start_mouse_exited"]
 [connection signal="pressed" from="Control/MainContainer/Start" to="." method="_on_Start_pressed"]
