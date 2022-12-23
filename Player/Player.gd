@@ -1,6 +1,10 @@
 extends KinematicBody2D
 
+signal pull_slimes
+
 export var SPEED: int = 10000
+export var slime_count: int = 3
+export var pull_duration: float = 1
 export var walk_animation_name = "walk"
 export var walk_forward_animation_name = "walk_forward"
 export var walk_up_animation_name = "walk_up"
@@ -8,9 +12,16 @@ export var idle_animation_name = "idle"
 onready var animations: AnimatedSprite = $Animations
 
 var jumping = false
+var pulling = false
+var pull_tween : SceneTreeTween
+
+func _ready():
+	for _i in range(slime_count):
+		call_deferred("spawn_slime")
 
 func _physics_process(delta):
 	var velocity = Vector2.ZERO
+	
 	if Input.is_action_pressed("move_right"):
 		velocity.x += 1
 		animations.flip_h = false
@@ -25,11 +36,17 @@ func _physics_process(delta):
 	if Input.is_action_pressed("move_down"):
 		velocity.y += 1
 	
-	if Input.is_action_just_pressed("ui_cancel"):
+	if Input.is_action_just_pressed("debug_spawn"):
 		spawn_slime()
 	
 	if Input.is_action_just_pressed("throw"):
 		throw_slime()
+	
+	if Input.is_action_just_pressed("pull"):
+		start_pull_slimes()
+	
+	if Input.is_action_just_released("pull"):
+		cancel_pull_slimes()
 	
 	if jumping:
 		var progress = float(animations.frame) / animations.frames.get_frame_count(animations.animation)
@@ -51,6 +68,8 @@ func _physics_process(delta):
 			animations.frame = frame
 	
 	velocity = velocity.normalized() * SPEED * delta
+	if pulling:
+		velocity *= 0.2
 	
 	move_and_slide(velocity)
 
@@ -68,6 +87,7 @@ func spawn_slime():
 	slime.player = self
 	slime.follow_index = len(slime_list)
 	slime.connect("slime_hurt", $LivingEntity, "_on_area_entered")
+	connect("pull_slimes", slime, "pull")
 	
 	slime_list.append(slime)
 	get_parent().add_child(slime)
@@ -79,6 +99,7 @@ func throw_slime():
 	if len(slime_list) == 0: return
 	if is_throwing: return
 	is_throwing = true
+	
 	var slime_to_throw = slime_list.pop_front()
 	
 	for i in range(len(slime_list)):
@@ -86,8 +107,24 @@ func throw_slime():
 	
 	slime_to_throw.throw(get_global_mouse_position())
 	slime_to_throw.connect("slime_returned", self, "_on_slime_hit", [slime_to_throw], CONNECT_ONESHOT)
+	yield(get_tree().create_timer(0.5), "timeout")
+	is_throwing = false
 
 func _on_slime_hit(slime):
 	slime.follow_index = len(slime_list)
 	slime_list.append(slime)
-	is_throwing = false
+	#is_throwing = false
+
+func start_pull_slimes():
+	pull_tween = get_tree().create_tween()
+	pull_tween.tween_callback(self, "finish_pull_slimes").set_delay(pull_duration)
+	pulling = true
+
+func finish_pull_slimes():
+	emit_signal("pull_slimes")
+	pulling = false
+
+func cancel_pull_slimes():
+	if pulling:
+		pull_tween.stop()
+		pulling = false
