@@ -11,7 +11,7 @@ onready var tween = $Tween
 var attack_timer = attack_speed_secs
 var random_attack = null
 
-func _process(delta):player_position: Vector2
+func _process(delta):
 	if attack_timer >= attack_speed_secs:
 		random_attack = get_random_int(0,0)
 		attack_timer = 0.0

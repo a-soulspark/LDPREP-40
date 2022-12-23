@@ -1,7 +1,6 @@
 extends KinematicBody2D
 
 export var speed = 50
-export var weight = 0.1
 export var shooting_speed = 1
 export var player_position: Vector2 = Vector2(100, 100)
 
@@ -16,6 +15,7 @@ func follow_player():
 	look_at(player_position)
 
 func _physics_process(delta):
+	get_player_position()
 	follow_player()
 	attack(delta)
 	move_and_slide(_velocity)
@@ -40,3 +40,6 @@ func spawn_bullet():
 	bullet.vector = vector
 	bullet.rotation = rotation
 	get_parent().add_child(bullet)
+
+func get_player_position():
+	player_position = $"../Player".position

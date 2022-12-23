@@ -8,7 +8,8 @@
 [sub_resource type="CircleShape2D" id=1]
 radius = 18.9
 
-[node name="KinematicBody2D" type="KinematicBody2D"]
+[node name="Minion" type="KinematicBody2D"]
+collision_layer = 32
 script = ExtResource( 3 )
 enemy_bullet_scene = ExtResource( 4 )
 
@@ -21,3 +22,7 @@ flip_h = true
 shape = SubResource( 1 )
 
 [node name="LivingEntity" parent="." instance=ExtResource( 1 )]
+health = 2
+game_ends_when_killed = false
+
+[editable path="LivingEntity"]
