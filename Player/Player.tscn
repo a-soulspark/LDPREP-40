@@ -120,7 +120,8 @@ script = ExtResource( 1 )
 scale = Vector2( 4, 4 )
 frames = SubResource( 18 )
 animation = "walk"
-frame = 4
+frame = 1
+speed_scale = 1.125
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -130,3 +131,11 @@ shape = SubResource( 34 )
 [node name="LivingEntity" parent="." instance=ExtResource( 3 )]
 health = 5
 is_hostile = false
+
+[node name="Line2D" type="Line2D" parent="."]
+points = PoolVector2Array( 0, 0, 0, 0 )
+width = 2.0
+default_color = Color( 1, 1, 1, 0.498039 )
+
+[node name="RayCast2D" type="RayCast2D" parent="Line2D"]
+cast_to = Vector2( 2000, 0 )
