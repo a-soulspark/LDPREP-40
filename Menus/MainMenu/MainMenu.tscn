@@ -332,3 +332,4 @@ stream = ExtResource( 7 )
 [connection signal="mouse_entered" from="Control/MainContainer/Exit" to="." method="_on_Exit_mouse_entered"]
 [connection signal="mouse_exited" from="Control/MainContainer/Exit" to="." method="_on_Exit_mouse_exited"]
 [connection signal="pressed" from="Control/MainContainer/Exit" to="." method="_on_Exit_pressed"]
+[connection signal="animation_finished" from="TitleAnimation" to="." method="_on_TitleAnimation_animation_finished"]
