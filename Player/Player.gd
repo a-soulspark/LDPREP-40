@@ -3,7 +3,7 @@ extends KinematicBody2D
 signal pull_slimes
 
 export var SPEED: int = 10000
-export var slime_count: int = 3
+export var slime_count: int = 1
 export var pull_duration: float = 1
 export var walk_animation_name = "walk"
 export var walk_forward_animation_name = "walk_forward"
@@ -12,7 +12,8 @@ export var idle_animation_name = "idle"
 onready var animations: AnimatedSprite = $Animations
 
 var jumping = false
-var pulling = false
+var is_aiming = false
+var is_pulling = false
 var pull_tween : SceneTreeTween
 
 func _ready():
@@ -40,13 +41,22 @@ func _physics_process(delta):
 		spawn_slime()
 	
 	if Input.is_action_just_pressed("throw"):
-		throw_slime()
+		if len(slime_list) > 0:
+			start_aim_slime()
+		else:
+			start_pull_slimes()
 	
-	if Input.is_action_just_pressed("pull"):
-		start_pull_slimes()
+	if Input.is_action_just_released("throw"):
+		if is_aiming:
+			throw_slime()
+		else:
+			cancel_pull_slimes()
 	
-	if Input.is_action_just_released("pull"):
-		cancel_pull_slimes()
+	if is_aiming:
+		$Line2D/RayCast2D.look_at(get_global_mouse_position())
+		$Line2D/RayCast2D.force_raycast_update()
+		var hit_pos = $Line2D/RayCast2D.get_collision_point()
+		$Line2D.set_point_position(1, hit_pos - $Line2D.global_position)
 	
 	if jumping:
 		var progress = float(animations.frame) / animations.frames.get_frame_count(animations.animation)
@@ -68,7 +78,7 @@ func _physics_process(delta):
 			animations.frame = frame
 	
 	velocity = velocity.normalized() * SPEED * delta
-	if pulling:
+	if is_pulling:
 		velocity *= 0.2
 	
 	move_and_slide(velocity)
@@ -95,10 +105,17 @@ func spawn_slime():
 
 var is_throwing = false
 
+func start_aim_slime():
+	is_aiming = true
+	$Line2D.visible = true
+
 func throw_slime():
 	if len(slime_list) == 0: return
 	if is_throwing: return
 	is_throwing = true
+
+	is_aiming = false
+	$Line2D.visible = false
 	
 	var slime_to_throw = slime_list.pop_front()
 	
@@ -118,14 +135,14 @@ func _on_slime_hit(slime):
 func start_pull_slimes():
 	pull_tween = get_tree().create_tween()
 	pull_tween.tween_callback(self, "finish_pull_slimes").set_delay(pull_duration)
-	pulling = true
+	is_pulling = true
 
 func finish_pull_slimes():
 	emit_signal("pull_slimes")
 	spawn_slime()
-	pulling = false
+	is_pulling = false
 
 func cancel_pull_slimes():
-	if pulling:
+	if is_pulling:
 		pull_tween.stop()
-		pulling = false
+		is_pulling = false

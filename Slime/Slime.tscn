@@ -128,7 +128,7 @@ animations = [ {
 } ]
 
 [sub_resource type="CircleShape2D" id=45]
-radius = 6.0
+radius = 8.0
 
 [sub_resource type="CircleShape2D" id=44]
 radius = 8.0
@@ -144,7 +144,7 @@ follow_delay = 0.125
 scale = Vector2( 4, 4 )
 frames = SubResource( 34 )
 animation = "idle"
-frame = 3
+frame = 1
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
