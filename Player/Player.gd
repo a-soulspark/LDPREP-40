@@ -67,7 +67,7 @@ func spawn_slime():
 	slime.position = position
 	slime.player = self
 	slime.follow_index = len(slime_list)
-	slime.connect("area_entered", $LivingEntity, "_on_area_entered")
+	slime.connect("slime_hurt", $LivingEntity, "_on_area_entered")
 	
 	slime_list.append(slime)
 	get_parent().add_child(slime)

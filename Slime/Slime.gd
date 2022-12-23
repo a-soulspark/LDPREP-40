@@ -1,5 +1,6 @@
 extends Area2D
 
+signal slime_hurt
 signal slime_returned
 
 class PositionSnapshot:
@@ -12,18 +13,20 @@ class PositionSnapshot:
 
 export var player_path : NodePath
 export var follow_delay : float
-export var throw_duration : float = 1
+export var throw_speed : float = 1000
 
 onready var player : KinematicBody2D = get_node(player_path)
 
+var target_position : Vector2
 var follow_index : int
 var positions : Array = []
-var target_position
-var throw_timer = 0
-var throw_start : Vector2
-var throw_target : Vector2
+
+var is_thrown = false
+var throw_direction : Vector2
+var throw_momentum : float
 
 func _ready():
+	connect("body_entered", self, "_on_body_entered")
 	target_position = player.position
 
 func _physics_process(delta):
@@ -39,35 +42,39 @@ func _physics_process(delta):
 		else:
 			break
 	
-	if throw_timer > 0:
-		# Throw animation
-		throw_timer -= delta
-		rotation = (global_position - target_position).angle()
-		rotate(PI / 2)
-		
-		if throw_timer / throw_duration < 0.5:
-			throw_start = target_position
-			$Animations.play("throw", true)
-		
-		position = lerp(throw_start, throw_target, ease(sin((1 - throw_timer / throw_duration) * PI), 0.75))
-		if throw_timer <= 0:
-			$VulnerableTimer.start(	)
-			$Attack.monitorable = false
-			rotation = 0
-			$Animations.play("idle")
-			emit_signal("slime_returned")
+	if is_thrown:
+		translate(throw_direction * throw_momentum * delta)
 	else:
 		# Follow Player
 		position = lerp(position, target_position, 0.3)
 		$Animations.flip_h = position.x > target_position.x
 
 func throw(target):
-	throw_timer = throw_duration
-	throw_start = position
-	throw_target = target
-	look_at(throw_target)
+	is_thrown = true
+	
+	throw_direction = (target - global_position).normalized()
+	look_at(target)
 	rotate(PI / 2)
-	$Attack.monitorable = true
-	monitoring = false
+	
+	# momentum
+	$Tween.stop(self, "throw_momentum")
+	$Tween.interpolate_property(self, "throw_momentum", throw_speed * 2, throw_speed * 0.2, 5, Tween.TRANS_EXPO, Tween.EASE_OUT)
+	$Tween.start()
+	
+	$Attack.set_deferred("monitorable", true)
+	$Hitbox.monitoring = false
 	$Animations.play("throw")
 	$VulnerableTimer.stop()
+
+func _on_body_entered(_body):
+	if not is_thrown: return
+	
+	is_thrown = false
+	rotation = 0
+	$VulnerableTimer.start()
+	$Attack.set_deferred("monitorable", false)
+	$Animations.play("idle")
+	emit_signal("slime_returned")
+
+func _on_hitbox_entered(area):
+	emit_signal("slime_hurt", area)
