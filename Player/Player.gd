@@ -122,6 +122,7 @@ func start_pull_slimes():
 
 func finish_pull_slimes():
 	emit_signal("pull_slimes")
+	spawn_slime()
 	pulling = false
 
 func cancel_pull_slimes():
