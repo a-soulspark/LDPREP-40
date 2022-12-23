@@ -485,7 +485,7 @@ func _ready():
 		hearts.append(new_heart)
 		new_heart.texture = new_heart.texture.duplicate()
 		# Timer offset (for smooth bling)
-		new_heart.timer = float(maximum_health - i * 0.7) / maximum_health * new_heart.animation_duration * 0.4
+		new_heart.timer = float(maximum_health - i * 0.7) / maximum_health * new_heart.animation_duration * 0.6
 		add_child(new_heart)
 
 func _on_entity_hurt():

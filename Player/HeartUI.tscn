@@ -13,7 +13,7 @@ onready var atlas_texture = texture as AtlasTexture
 export var animation_duration = 1.0
 
 var timer = 0
-var frames = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5]
+var frames = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5]
 
 onready var animation_frames = len(frames)
 
@@ -33,4 +33,4 @@ margin_bottom = 8.0
 rect_min_size = Vector2( 0, 8 )
 texture = SubResource( 1 )
 script = SubResource( 2 )
-animation_duration = 3.0
+animation_duration = 2.0
