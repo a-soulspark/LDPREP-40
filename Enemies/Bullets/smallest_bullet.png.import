@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/pixel_4.png-769345ec34cbb3765fe8f0535ebfca32.stex"
+path="res://.import/smallest_bullet.png-c931a073f4c61b8df65a01e928176f57.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://pixel_4.png"
-dest_files=[ "res://.import/pixel_4.png-769345ec34cbb3765fe8f0535ebfca32.stex" ]
+source_file="res://Enemies/Bullets/smallest_bullet.png"
+dest_files=[ "res://.import/smallest_bullet.png-c931a073f4c61b8df65a01e928176f57.stex" ]
 
 [params]
 

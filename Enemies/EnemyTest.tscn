@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=2]
+[gd_scene load_steps=59 format=2]
 
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Enemies/InGame.gd" type="Script" id=2]
@@ -11,10 +11,11 @@
 [ext_resource path="res://Tiles/tileset_wall.png" type="Texture" id=9]
 [ext_resource path="res://Tiles/wall_tiles.png" type="Texture" id=10]
 [ext_resource path="res://icon.png" type="Texture" id=11]
-[ext_resource path="res://Enemies/EnemyBullet.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Enemies/Bullets/EnemyBullet.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Enemies/Bullets/EnemyBulletSmall.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Menus/MainMenu/MainMenu.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Enemies/Minion/Minion.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Enemies/Bullets/EnemyBulletYellow.tscn" type="PackedScene" id=16]
 
 [sub_resource type="ConvexPolygonShape2D" id=8]
 points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
@@ -439,6 +440,21 @@ points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
 8/shapes = [  ]
 8/z_index = 0
 
+[sub_resource type="GDScript" id=46]
+script/source = "extends Node2D
+
+export(int, 100) var health_criteria : int
+export var pattern_to_enable : NodePath
+
+var triggered = false
+
+func _on_entity_hurt():
+	if triggered: return
+	if get_parent().health < health_criteria:
+		get_node(pattern_to_enable).activate_clock()
+		triggered = true
+"
+
 [sub_resource type="Shader" id=42]
 code = "shader_type canvas_item;
 uniform vec2 player_position;
@@ -544,7 +560,14 @@ position = Vector2( 960, 576 )
 attack0_number_bullets = 16
 
 [node name="AnimatedSprite" parent="Enemy" index="0"]
-scale = Vector2( 4, 4 )
+frame = 1
+
+[node name="Health" type="Node2D" parent="Enemy/LivingEntity" index="2"]
+position = Vector2( 0, 8 )
+scale = Vector2( 0.666667, 0.5 )
+script = SubResource( 46 )
+health_criteria = 5
+pattern_to_enable = NodePath("../../Pattern4")
 
 [node name="Pattern1" type="Node2D" parent="Enemy"]
 script = ExtResource( 8 )
@@ -584,13 +607,25 @@ spread_power = 2
 spin_angle = 15.0
 pressure_noise = 0.25
 
+[node name="Pattern4" type="Node2D" parent="Enemy"]
+script = ExtResource( 8 )
+bullet = ExtResource( 16 )
+target_path = NodePath("../../Player")
+is_aimed = false
+is_clock_on = false
+clock_rate = 4.0
+spread_arc = 360.0
+spread_power = 2
+spin_angle = 15.0
+pressure_noise = 0.25
+
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 100, 372 )
 SPEED = 18000
 slime_scene = ExtResource( 4 )
 
 [node name="Animations" parent="Player" index="0"]
-frame = 2
+frame = 1
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 current = true
@@ -671,13 +706,17 @@ script = ExtResource( 2 )
 main_menu_scene = ExtResource( 14 )
 
 [connection signal="entity_death" from="Enemy/LivingEntity" to="CanvasLayer" method="hide"]
+[connection signal="entity_death" from="Enemy/LivingEntity" to="PauseMenu" method="game_over"]
+[connection signal="entity_hurt" from="Enemy/LivingEntity" to="Enemy/LivingEntity/Health" method="_on_entity_hurt"]
 [connection signal="entity_hurt" from="Enemy/LivingEntity" to="Player/Camera2D" method="shake" binds= [ 5.0 ]]
 [connection signal="entity_death" from="Player/LivingEntity" to="CanvasLayer" method="hide"]
+[connection signal="entity_death" from="Player/LivingEntity" to="PauseMenu" method="game_over"]
 [connection signal="entity_free" from="Player/LivingEntity" to="Player/Camera2D" method="_on_entity_free"]
 [connection signal="entity_hurt" from="Player/LivingEntity" to="Player/Camera2D" method="shake" binds= [ 30.0 ]]
 [connection signal="paused" from="PauseMenu" to="CanvasLayer" method="hide"]
 [connection signal="unpaused" from="PauseMenu" to="CanvasLayer" method="show"]
 
 [editable path="Minion"]
+[editable path="Minion/LivingEntity"]
 [editable path="Enemy"]
 [editable path="Player"]

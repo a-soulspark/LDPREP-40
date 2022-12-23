@@ -11,6 +11,8 @@ class PositionSnapshot:
 		self.time = time
 		self.position = position
 
+const DUST_SCENE = preload("res://Slime/Dust.tscn")
+
 export var player_path : NodePath
 export var follow_delay : float
 export var throw_speed : float = 1000
@@ -25,6 +27,7 @@ var is_stuck = false
 var is_thrown = false
 var throw_direction : Vector2
 var throw_momentum : float
+var last_global_transform
 
 onready var original_parent = get_parent()
 
@@ -34,10 +37,10 @@ func _ready():
 	target_position = player.position
 
 func _physics_process(delta):
-	#modulate = Color.white * float($Attack.monitorable)
-
 	var current_time = Time.get_ticks_msec()
-	positions.append(PositionSnapshot.new(current_time, player.position))
+
+	if is_instance_valid(player):
+		positions.append(PositionSnapshot.new(current_time, player.position))
 	
 	for p in positions:
 		if current_time > p.time + int(follow_delay * (1 + follow_index) * 1000):
@@ -52,6 +55,9 @@ func _physics_process(delta):
 		# Follow Player
 		position = lerp(position, target_position, 0.3)
 		$Animations.flip_h = position.x > target_position.x
+	
+	if is_inside_tree():
+		last_global_transform = global_transform
 
 func throw(target):
 	is_thrown = true
@@ -70,7 +76,14 @@ func throw(target):
 	$Hitbox.monitoring = false
 	$Animations.play("throw")
 	$VulnerableTimer.stop()
-
+	
+	var dust = DUST_SCENE.instance()
+	get_parent().add_child(dust)
+	
+	dust.global_position = global_position
+	dust.rotation = rotation
+	dust.move_local_y(5)
+	
 func _on_body_entered(body):
 	if not is_thrown: return
 	
@@ -79,12 +92,13 @@ func _on_body_entered(body):
 func stick_to_body(body):
 	if is_stuck: return
 	
-	var transf = global_transform
-	get_parent().remove_child(self)
-	body.add_child(self)
-	global_transform = transf
-	scale /= 2
+	reparent_to(body)
 	z_index = 2
+	
+	translate(throw_direction)
+	
+	if not body.is_connected("tree_exiting", self, "pull"):
+		body.connect("tree_exiting", self, "pull")
 	
 	is_stuck = true
 	is_thrown = false
@@ -98,19 +112,24 @@ func stick_to_body(body):
 func pull():
 	if not is_stuck: return
 
-	var transf = global_transform
-	get_parent().remove_child(self)
-	original_parent.add_child(self)
-	global_transform = transf
-	scale *= 2
+	reparent_to(original_parent)
 	z_index = 0
 	
 	rotation = 0
 	is_stuck = false
+	
 	# Set $Hitbox.monitoring = true with a 1s delay
 	$VulnerableTimer.start()
 	$Animations.play("idle")
 	emit_signal("slime_returned")
+
+func reparent_to(node):
+	if not node.is_inside_tree(): return
+	
+	get_parent().remove_child(self)
+	node.add_child(self)
+	global_transform = last_global_transform
+	global_scale = Vector2.ONE
 
 func _on_hitbox_entered(area):
 	emit_signal("slime_hurt", area)

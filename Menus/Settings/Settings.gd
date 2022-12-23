@@ -9,7 +9,7 @@ var volume = 50
 func _ready():
 	select_window_mode(window_mode)
 
-func _process(delta):
+func _process(_delta):
 	if Input.is_action_just_pressed("quit") and false:
 		get_tree().quit()
 

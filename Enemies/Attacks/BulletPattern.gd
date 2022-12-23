@@ -104,3 +104,6 @@ func reset_timer(is_burst : bool, force_reset_timer : bool = false):
 	
 	shoot_timer_end = factor_noise(1/burst_rate, burst_noise) if is_burst\
 				else factor_noise(1/clock_rate, clock_noise)
+
+func activate_clock():
+	is_clock_on = true

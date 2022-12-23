@@ -8,7 +8,7 @@ signal entity_free
 export var health : int = 10
 export var invincibility_duration : float = 1
 export var is_hostile : bool = true
-export var death_size_multiplier = 3
+export var death_size_multiplier : float = 3
 export var game_ends_when_killed = true
 
 onready var tween = $GetBigger
@@ -51,6 +51,7 @@ func die():
 	var animation_duration
 	if game_ends_when_killed: animation_duration = 2
 	else: animation_duration = 1
+	
 	tween.interpolate_property(
 			parent,
 			"scale",

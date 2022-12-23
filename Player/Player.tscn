@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Player/Assets/mini_slime-Sheet.png" type="Texture" id=2]
-[ext_resource path="res://LivingEntity.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Misc/LivingEntity.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Player/Assets/mini_slime_forward.png" type="Texture" id=4]
 [ext_resource path="res://Player/Assets/mini_slime_up.png" type="Texture" id=5]
 
@@ -120,7 +120,7 @@ script = ExtResource( 1 )
 scale = Vector2( 4, 4 )
 frames = SubResource( 18 )
 animation = "walk"
-frame = 1
+frame = 2
 speed_scale = 1.125
 playing = true
 

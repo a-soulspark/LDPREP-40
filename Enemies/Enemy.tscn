@@ -1,45 +1,107 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://Enemies/Enemy.gd" type="Script" id=1]
-[ext_resource path="res://LivingEntity.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Enemies/EnemyBullet.tscn" type="PackedScene" id=4]
-[ext_resource path="res://EntitySprite.gd" type="Script" id=5]
+[ext_resource path="res://Misc/LivingEntity.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Misc/EntitySprite.gd" type="Script" id=5]
 [ext_resource path="res://Enemies/avocado_guy.png" type="Texture" id=6]
 
 [sub_resource type="ShaderMaterial" id=7]
 
+[sub_resource type="AtlasTexture" id=25]
+atlas = ExtResource( 6 )
+region = Rect2( 612, 0, 51, 34 )
+
+[sub_resource type="AtlasTexture" id=26]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 0, 51, 34 )
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 0, 51, 34 )
+
+[sub_resource type="AtlasTexture" id=13]
+atlas = ExtResource( 6 )
+region = Rect2( 51, 0, 51, 34 )
+
+[sub_resource type="AtlasTexture" id=14]
+atlas = ExtResource( 6 )
+region = Rect2( 102, 0, 51, 34 )
+
+[sub_resource type="AtlasTexture" id=15]
+atlas = ExtResource( 6 )
+region = Rect2( 153, 0, 51, 34 )
+
+[sub_resource type="AtlasTexture" id=16]
+atlas = ExtResource( 6 )
+region = Rect2( 204, 0, 51, 34 )
+
+[sub_resource type="AtlasTexture" id=17]
+atlas = ExtResource( 6 )
+region = Rect2( 255, 0, 51, 34 )
+
+[sub_resource type="AtlasTexture" id=18]
+atlas = ExtResource( 6 )
+region = Rect2( 306, 0, 51, 34 )
+
+[sub_resource type="AtlasTexture" id=19]
+atlas = ExtResource( 6 )
+region = Rect2( 357, 0, 51, 34 )
+
+[sub_resource type="AtlasTexture" id=20]
+atlas = ExtResource( 6 )
+region = Rect2( 408, 0, 51, 34 )
+
+[sub_resource type="AtlasTexture" id=21]
+atlas = ExtResource( 6 )
+region = Rect2( 459, 0, 51, 34 )
+
+[sub_resource type="AtlasTexture" id=22]
+atlas = ExtResource( 6 )
+region = Rect2( 510, 0, 51, 34 )
+
+[sub_resource type="AtlasTexture" id=23]
+atlas = ExtResource( 6 )
+region = Rect2( 561, 0, 51, 34 )
+
+[sub_resource type="AtlasTexture" id=24]
+atlas = ExtResource( 6 )
+region = Rect2( 612, 0, 51, 34 )
+
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
-"frames": [ ExtResource( 6 ) ],
+"frames": [ SubResource( 25 ), SubResource( 26 ) ],
 "loop": true,
 "name": "idle",
-"speed": 12.0
+"speed": 5.0
+}, {
+"frames": [ SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ), SubResource( 19 ), SubResource( 20 ), SubResource( 21 ), SubResource( 22 ), SubResource( 23 ), SubResource( 24 ) ],
+"loop": false,
+"name": "jump",
+"speed": 13.0
 } ]
 
 [sub_resource type="CircleShape2D" id=11]
-radius = 24.0
+radius = 48.0
 
 [node name="Enemy" type="KinematicBody2D"]
 collision_layer = 32
 script = ExtResource( 1 )
-enemy_bullet_scene = ExtResource( 4 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 material = SubResource( 7 )
 position = Vector2( 0, -16 )
+scale = Vector2( 4, 4 )
 frames = SubResource( 1 )
 animation = "idle"
 playing = true
 script = ExtResource( 5 )
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
-position = Vector2( 0, -16 )
-scale = Vector2( 1, 1.33 )
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2( 0.8, 1.2 )
 shape = SubResource( 11 )
 
 [node name="LivingEntity" parent="." instance=ExtResource( 2 )]
-position = Vector2( 0, -16 )
-scale = Vector2( 1.5, 2 )
+scale = Vector2( 2.4, 3.6 )
 health = 15
 invincibility_duration = 0.1
 

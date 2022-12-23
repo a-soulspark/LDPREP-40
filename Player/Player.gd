@@ -12,6 +12,7 @@ export var idle_animation_name = "idle"
 onready var animations: AnimatedSprite = $Animations
 
 var jumping = false
+var has_clicked = false
 var is_aiming = false
 var is_pulling = false
 var pull_tween : SceneTreeTween
@@ -41,16 +42,21 @@ func _physics_process(delta):
 		spawn_slime()
 	
 	if Input.is_action_just_pressed("throw"):
-		if len(slime_list) > 0:
-			start_aim_slime()
-		else:
-			start_pull_slimes()
+		has_clicked = true
 	
 	if Input.is_action_just_released("throw"):
+		has_clicked = false
 		if is_aiming:
 			throw_slime()
 		else:
 			cancel_pull_slimes()
+	
+	if has_clicked and not is_throwing:
+		has_clicked = false
+		if len(slime_list) > 0:
+			start_aim_slime()
+		else:
+			start_pull_slimes()
 	
 	if is_aiming:
 		$Line2D/RayCast2D.look_at(get_global_mouse_position())

@@ -1,6 +1,6 @@
 [gd_scene load_steps=33 format=2]
 
-[ext_resource path="res://Enemies/Attack.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Enemies/Attacks/Attack.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Slime/Slime.gd" type="Script" id=2]
 [ext_resource path="res://Player/Assets/mini_slime_up.png" type="Texture" id=3]
 [ext_resource path="res://Player/Assets/mini_slime-Sheet.png" type="Texture" id=5]
@@ -109,7 +109,7 @@ animations = [ {
 "frames": [ SubResource( 46 ), SubResource( 47 ), SubResource( 48 ) ],
 "loop": true,
 "name": "stick",
-"speed": 3.0
+"speed": 9.0
 }, {
 "frames": [ SubResource( 40 ), SubResource( 41 ), SubResource( 42 ), SubResource( 43 ) ],
 "loop": false,
@@ -128,7 +128,7 @@ animations = [ {
 } ]
 
 [sub_resource type="CircleShape2D" id=45]
-radius = 8.0
+radius = 16.0
 
 [sub_resource type="CircleShape2D" id=44]
 radius = 8.0
@@ -144,13 +144,14 @@ follow_delay = 0.125
 scale = Vector2( 4, 4 )
 frames = SubResource( 34 )
 animation = "idle"
-frame = 1
+frame = 4
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 45 )
 
 [node name="Attack" parent="." instance=ExtResource( 1 )]
+scale = Vector2( 2, 2 )
 monitorable = false
 destroy_on_hit = false
 

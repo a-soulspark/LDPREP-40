@@ -31,3 +31,6 @@ func resume():
 	_main_menu.fade_out()
 	
 	emit_signal("unpaused")
+
+func game_over():
+	set_process_input(false)
