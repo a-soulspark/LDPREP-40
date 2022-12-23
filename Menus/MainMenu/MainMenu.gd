@@ -1,3 +1,4 @@
+class_name MainMenu
 extends Node2D
 
 onready var title_animation = $TitleAnimation
