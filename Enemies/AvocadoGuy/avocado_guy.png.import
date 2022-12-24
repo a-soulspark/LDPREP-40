@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/avocado_guy.png-1590437ea3ff7d524cd259dafdf72f15.stex"
+path="res://.import/avocado_guy.png-523a1eabd00b1fac82e40f3b50796802.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Enemies/avocado_guy.png"
-dest_files=[ "res://.import/avocado_guy.png-1590437ea3ff7d524cd259dafdf72f15.stex" ]
+source_file="res://Enemies/AvocadoGuy/avocado_guy.png"
+dest_files=[ "res://.import/avocado_guy.png-523a1eabd00b1fac82e40f3b50796802.stex" ]
 
 [params]
 

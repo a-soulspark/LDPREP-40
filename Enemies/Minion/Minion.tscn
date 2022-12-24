@@ -27,6 +27,7 @@ scale = Vector2( 1.25, 1.25 )
 health = 2
 invincibility_duration = 0.1
 death_size_multiplier = 2.0
+hit_camera_shake = 3.0
 game_ends_when_killed = false
 
 [editable path="LivingEntity"]

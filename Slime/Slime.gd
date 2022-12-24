@@ -28,6 +28,7 @@ var is_thrown = false
 var throw_direction : Vector2
 var throw_momentum : float
 var last_global_transform
+var vulnerable_timer
 
 onready var original_parent = get_parent()
 
@@ -110,8 +111,11 @@ func stick_to_body(body):
 	monitoring = false
 
 func pull():
-	if not is_stuck: return
+	if not is_stuck or not is_inside_tree(): return
 
+	if get_parent().is_connected("tree_exiting", self, "pull"):
+		get_parent().disconnect("tree_exiting", self, "pull")
+	
 	reparent_to(original_parent)
 	z_index = 0
 	
@@ -124,7 +128,7 @@ func pull():
 	emit_signal("slime_returned")
 
 func reparent_to(node):
-	if not node.is_inside_tree(): return
+	if not node.is_inside_tree() or is_queued_for_deletion(): return
 	
 	get_parent().remove_child(self)
 	node.add_child(self)

@@ -11,7 +11,7 @@ func activate_pause_menu():
 	fade_in()
 
 func _on_Start_pressed():
-	Transition.change_scene("res://Enemies/EnemyTest.tscn")
+	Transition.change_scene("res://Zones/Zone.tscn")
 
 func _on_Exit_pressed():
 	get_tree().quit()
