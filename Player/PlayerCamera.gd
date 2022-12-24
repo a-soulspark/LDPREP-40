@@ -1,5 +1,7 @@
 extends Camera2D
 
+func _ready():
+	GameEvents.connect("shake_camera", self, "shake")
 
 func shake(amount : float):
 	$Tween.interpolate_method(self, "_shake_amount", amount, 0, 0.3, Tween.TRANS_BOUNCE, Tween.EASE_OUT)

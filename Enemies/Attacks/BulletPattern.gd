@@ -53,7 +53,7 @@ func fire_burst():
 
 func shoot():
 	var is_radial = is_equal_approx(spread_arc, 360)
-	var spread_arc = self.spread_arc if spread_power > 1 else 0
+	var spread_arc = self.spread_arc if spread_power > 1 else 0.0
 	
 	var angle_step = spread_arc / (spread_power - int(not is_radial)) if spread_power != 1 else 0
 	var angle_shift = spread_arc / 2

@@ -9,6 +9,7 @@ export var health : int = 10
 export var invincibility_duration : float = 1
 export var is_hostile : bool = true
 export var death_size_multiplier : float = 3
+export var hit_camera_shake : float = 1
 export var game_ends_when_killed = true
 
 onready var tween = $GetBigger
@@ -35,6 +36,7 @@ func hurt(damage : int):
 	health -= damage
 	invincibility_timer = invincibility_duration
 	emit_signal("entity_hurt")
+	GameEvents.shake_camera(hit_camera_shake)
 	
 	if health <= 0:
 		die()
@@ -61,8 +63,10 @@ func die():
 			Tween.TRANS_BOUNCE,
 			Tween.EASE_IN_OUT
 	)
+	
 	tween.start()
 	emit_signal("entity_death")
+	GameEvents.end_game()
 
 func _on_GetBigger_tween_all_completed():
 	if game_ends_when_killed: Transition.change_scene("res://Menus/MainMenu/MainMenu.tscn")

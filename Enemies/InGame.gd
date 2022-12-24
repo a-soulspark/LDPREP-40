@@ -32,5 +32,5 @@ func resume():
 	
 	emit_signal("unpaused")
 
-func game_over():
+func game_end():
 	set_process_input(false)

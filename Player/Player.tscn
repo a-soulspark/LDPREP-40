@@ -120,7 +120,7 @@ script = ExtResource( 1 )
 scale = Vector2( 4, 4 )
 frames = SubResource( 18 )
 animation = "walk"
-frame = 2
+frame = 5
 speed_scale = 1.125
 playing = true
 
@@ -131,6 +131,7 @@ shape = SubResource( 34 )
 [node name="LivingEntity" parent="." instance=ExtResource( 3 )]
 health = 5
 is_hostile = false
+hit_camera_shake = 30.0
 
 [node name="Line2D" type="Line2D" parent="."]
 points = PoolVector2Array( 0, 0, 0, 0 )
