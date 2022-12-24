@@ -118,11 +118,7 @@ anims/FloatingTitle = SubResource( 3 )
 
 [node name="Name" type="Label" parent="MenuRoot/Title"]
 anchor_right = 1.0
-<<<<<<< HEAD
-margin_top = 16.0
-=======
 margin_top = 49.0
->>>>>>> 7f8e9103111c06613e632eaa7b06c3476a02178b
 margin_bottom = 122.0
 theme = SubResource( 6 )
 custom_fonts/font = SubResource( 7 )
